@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="lib/fontawesome-free-5.15.4-web/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="lib/normalize.css">
+
+    <style>
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        #Navbar {
+            flex-direction: column;
+            flex:1;
+            background: #1E293B;
+            width: 50vh;
+            min-height: 100vh;
+            color: white;
+            padding:20px 70px;
+        }
+
+        .navbar-row {
+            display: contents;
+            position: fixed;
+        }
+
+        .nav-container {
+            position: fixed;
+            justify-content: center;
+            padding: 20px 0;
+
+        }
+
+        .nav-link , .nav-link-ul{
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-link-ul{
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .nav-link-ul li{
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+
+        .nav-link-ul li i{
+            margin-right: 10px;
+        }
+
+        .nav-link{
+            margin: 10px 0;
+
+        }
+
+
+        .header {
+            background: #F2F6FC;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            position: relative;
+            font-size: 35px;
+            font-weight: 680;
+            top: 19px;
+        }
+
+        .page-subtitle {
+            position: relative;
+            font-size: 14px;
+            font-weight: 600;
+            top: 10px;
+        }
+
+        .table-remove-btn{
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 8px;
+            font-size: 0.85rem;
+
+        }
+        .btn-update ,.btn-add ,.btn-remove {
+            width: 186px;
+            height: 44px;
+            border-radius: 12px;
+
+        }
+
+
+         .search-area {
+            background-color: #E2E8F0;
+             position: relative;
+             top: 10px;
+            padding: 6px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+         .search-btn {
+            border-radius: 20px;
+            background-color: white;
+            color: #333;
+             position: relative;
+             top: 5px;
+        }
+
+        .SearchBar {
+            padding: 11px;
+            border-radius: 20px;
+
+        }
+
+        .searchBar-lable{
+            padding: 11px;
+        }
+
+        .form-Field{
+            font-size: 14px;
+            margin-top: -3px;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .field-lable {
+            position: relative;
+            font-size: 20px;
+            font-weight: 350;
+            color: #64748B;
+            font-family: 'Inter', sans-serif;
+            padding: 13px 10px;
+            margin: 0;
+        }
+
+        .my-table {
+            background-color: transparent;
+            overflow: hidden;
+            border-collapse: separate;
+            border-spacing: 0 4px;
+            border: transparent;
+        }
+
+        .my-table thead tr th {
+
+            background-color: #F8FAFC;
+            color: black;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px;
+
+        }
+
+        .my-table tbody tr td {
+            background-color: white;
+            color: #323C47;
+            font-weight: 400;
+        }
+
+        .pagination{
+            position: relative;
+            display: flex;
+            justify-content: end;
+            bottom: -6px;
+        }
+
+        .card {
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+
+        @media (min-width: 992px) {
+            .card {
+                height: 46vh;
+            }
+        }
+
+        .card-header {
+            background-color: #33B864;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+            padding: 0;
+        }
+
+        @media (min-width: 768px) {
+            .card-header {
+                font-size: 25px;
+            }
+        }
+
+        .card-header p {
+            margin-top: 12px;
+            margin-left: 10px;
+        }
+
+
+        .total-section {
+            background-color: white;
+            height: auto;
+            text-align: right;
+            padding: 10px 20px;
+        }
+
+        .total-label {
+            color: blue;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .subtotal-label {
+            color: red;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .cash-lable, .discount-lable, .balance-lable {
+            background-color: #334155;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 7px 15px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .discount-lable, .balance-lable {
+            background-color: #D9D9D9;
+            color: #000;
+        }
+
+        .btn-purchase {
+            background-color: #38A169;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 15px;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        @media (max-width: 767px) {
+            .my-table {
+                font-size: 14px;
+            }
+
+            .table-remove-btn {
+                padding: 3px 6px;
+                font-size: 0.75rem;
+            }
+            body {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }}
+
+
+
+
+    </style>
+
+</head>
+<body>
+
+    <section id="Navbar">
+        <div class="row navbar-row">
+             <h1 class="navbar-title">POS</h1>
+             <div class="nav-container">
+                <div class="d-flex flex-column gap-2">
+                    <ul class="nav-link-ul">
+                        <li class="active">
+                            <i class="fas fa-th-large"></i>
+                            <a class="p-1 rounded nav-link" href="#Dashboard">Dashboard</a>
+                        </li>
+
+                        <li class="active">
+                            <i class="fas fa-users"></i>
+                            <a class="p-1 rounded nav-link" href="#Customer">Customers</a>
+                        </li>
+
+                        <li class="active">
+                            <i class="fas fa-box"></i>
+                            <a class="p-1 rounded nav-link" href="#Item">Inventory</a>
+                        </li>
+
+                        <li class="active">
+                            <i class="fas fa-shopping-cart"></i>
+                            <a class="p-1 rounded nav-link" href="#Order">Orders</a>
+                        </li>
+
+                        <li class="active">
+                            <i class="fas fa-cog"></i>
+                            <a class="p-1 rounded nav-link" href="#Setting">Settings</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="header">
+
+        <section id="Customer" class="Customer-section header">
+            <div class="container-fluid">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title">Customer</h1>
+                        <p class="page-subtitle">Manage your customer database and loyalty programs</p>
+                    </div>
+                    <div class="col-md-6 text-end d-flex justify-content-end align-items-center">
+                        <button class="btn btn-danger btn-remove me-2">Remove</button>
+                        <button class="btn btn-primary btn-update me-2">Update Customer</button>
+                        <button class="btn btn-primary btn-add">Add Customer</button>
+                    </div>
+                </div>
+
+                    <div class="search-area">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label id="customer-SearchBar" class="form-label searchBar-lable">Search Customer</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  class="form-control SearchBar" placeholder="Search customers...">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn search-btn w-100">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <form class="row p-3 m-0 ">
+
+
+                    <div class="col-md-6 form-Field-div">
+
+                        <label class="form-label field-lable ">First Name</label>
+                        <input type="name" class="form-control form-Field" id="inputFname">
+                    </div>
+
+                    <div class="col-md-6 form-Field-div">
+                        <label class="form-label field-lable">Last Name</label>
+                        <input type="name" class="form-control form-Field" id="inputLname">
+                    </div>
+
+                    <div class="col-12 form-Field-div">
+                        <label for="inputAddress" class="form-label field-lable">Address</label>
+                        <input type="text" class="form-control form-Field" id="inputAddress" >
+                    </div>
+
+                    <div class="col-md-6 form-Field-div">
+                        <label  class="form-label field-lable">Phone</label>
+                        <input type="number" class="form-control form-Field" id="inputPhone">
+                    </div>
+
+                    <div class="col-md-6 form-Field-div">
+                        <label class="form-label field-lable">Email</label>
+                        <input type="text" class="form-control form-Field" id="inputEmail">
+                    </div>
+
+                </form>
+                <br>
+
+                 <div class="customer-table">
+                    <table class="table table-hover my-table ">
+                        <thead>
+                            <tr class="table-active">
+                              <th scope="col">Id</th>
+                              <th scope="col">Customer Name</th>
+                              <th scope="col">Email Address</th>
+                              <th scope="col">Phone</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>kamal</td>
+                              <td>Doe</td>
+                              <td>@social</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>John</td>
+                              <td>Doe</td>
+                              <td>@social</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>arun</td>
+                              <td>Doe</td>
+                              <td>@social</td>
+                            </tr>
+                          </tbody>
+                    </table>
+                 </div>
+
+                <nav class="page-mover">
+                  <ul class="pagination">
+                    <li class="page-item disabled">
+                      <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+
+            </div>
+        </section>
+
+        <section id="Item" class="Item-section header">
+            <div class="container-fluid">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title">Item</h1>
+                        <p class="page-subtitle">Track stock levels and manage your inventory</p>
+                    </div>
+                    <div class="col-md-6 text-end d-flex justify-content-end align-items-center">
+                        <button class="btn btn-danger btn-remove me-2">Remove</button>
+                        <button class="btn btn-primary btn-update me-2">Update Item</button>
+                        <button class="btn btn-primary btn-add">Add Item</button>
+                    </div>
+                </div>
+
+                    <div class="search-area">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="form-label searchBar-lable">Search Item</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="SearchBar" class="form-control SearchBar" placeholder="Search Item...">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn search-btn w-100">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <form class="row p-3 m-0 ">
+
+
+                    <div class="col-md-12 form-Field-div">
+
+                        <label class="form-label field-lable ">Item ID</label>
+                        <input type="name" class="form-control form-Field" id="inputItemId">
+                    </div>
+
+                    <div class="col-md-12 form-Field-div">
+                        <label class="form-label field-lable">Item Name</label>
+                        <input type="name" class="form-control form-Field" id="inputName">
+                    </div>
+
+                    <div class="col-6 form-Field-div">
+                        <label class="form-label field-lable">Qty</label>
+                        <input type="text" class="form-control form-Field" id="inputQty" >
+                    </div>
+
+                    <div class="col-md-6 form-Field-div">
+                        <label  class="form-label field-lable">Price</label>
+                        <input type="number" class="form-control form-Field" id="inputPrice">
+                    </div>
+
+                </form>
+                <br>
+
+                 <div class="customer-table">
+                    <table class="table table-hover my-table ">
+                        <thead>
+                            <tr class="table-active">
+                              <th scope="col">Id</th>
+                              <th scope="col">Item Name</th>
+                              <th scope="col">Qty</th>
+                              <th scope="col">Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>kamal</td>
+                              <td>Doe</td>
+                              <td>@social</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>John</td>
+                              <td>Doe</td>
+                              <td>@social</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>arun</td>
+                              <td>Doe</td>
+                              <td>@social</td>
+                            </tr>
+                          </tbody>
+                    </table>
+                 </div>
+
+                <nav class="page-mover">
+                  <ul class="pagination text-end">
+                    <li class="page-item disabled">
+                      <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+
+            </div>
+        </section>
+
+        <section id="Order" class="header">
+        <div class="container-fluid">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h1 class="page-title">Order</h1>
+                    <p class="page-subtitle">Track customer orders and manage your sales efficiently</p>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <p>Customer</p>
+                        </div>
+                        <div class="card-body">
+                            <form class="row p-2 m-0">
+                                <div class="col-12 mb-3 form-Field-div">
+                                    <label class="form-label ">Order ID</label>
+                                    <input type="name" class="form-control " id="inputCustomerId">
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3 form-Field-div">
+                                    <label class="form-label ">Customer ID</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3 form-Field-div">
+                                    <label class="form-label ">Date</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control " id="date">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-calendar-date"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-1 form-Field-div">
+                                    <label class="form-label ">Name</label>
+                                    <input type="text" class="form-control " id="inputCustomerName">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <p>Item</p>
+                        </div>
+                        <div class="card-body">
+                            <form class="row p-2 m-0">
+                                <div class="col-12 mb-3 form-Field-div">
+                                    <label class="form-label ">Item ID</label>
+                                    <input type="name" class="form-control " id="OrderInputItemId">
+                                </div>
+
+                                <div class="col-12 mb-3 form-Field-div">
+                                    <label class="form-label ">Item Name</label>
+                                    <input type="name" class="form-control " id="OrderInputName">
+                                </div>
+
+                                <div class="col-6 mb-3 form-Field-div">
+                                    <label class="form-label ">Qty</label>
+                                    <input type="text" class="form-control " id="OrderInputQty">
+                                </div>
+
+                                <div class="col-6 mb-3 form-Field-div">
+                                    <label class="form-label ">Price</label>
+                                    <input type="number" class="form-control " id="OrderInputPrice">
+                                </div>
+
+                                <div class="col-12 mb-1 form-Field-div text-end">
+                                    <button type="button" class="btn btn-danger addBtn">Add Item</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid px-0 mb-4">
+                <div class="row">
+                    <div class="col-12 col-lg-9 mb-3">
+                        <div class="table-responsive">
+                            <table class="table table-hover my-table">
+                                <thead>
+                                    <tr class="table-active">
+                                        <th scope="col">Item Code</th>
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">I001</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                        <td>
+                                            <button class="table-remove-btn">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">I002</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                        <td>
+                                            <button class="table-remove-btn">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">I002</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                        <td>
+                                            <button class="table-remove-btn">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                        <div class="total-section card mb-2">
+                            <p class="total-label">Total : 10418.5 Rs/=</p>
+                            <p class="subtotal-label">SubTotal : 9376.65Rs/=</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="discount-lable">Discount</div>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" value="10">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"></button>
+                            </div>
+
+                            <div class="cash-lable">Cash</div>
+                            <input type="text" class="form-control mb-3" value="15000">
+
+                            <div class="balance-lable">Balance</div>
+                            <input type="text" class="form-control mb-4" value="4581.5" readonly>
+
+                            <button class="btn-purchase">Purchase</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    </section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+</body>
+</html>
