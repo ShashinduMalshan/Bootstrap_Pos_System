@@ -7,24 +7,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="lib/fontawesome-free-5.15.4-web/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!--    <link rel="stylesheet" href="Style.css">-->
     <link rel="stylesheet" href="lib/normalize.css">
 
     <style>
 
         body {
-            display: flex;
+            display: grid;
+            grid-template-columns: 245px 1fr;
             min-height: 100vh;
             width: 100%;
         }
 
         #Navbar {
-            flex-direction: column;
-            flex:1;
+            position: relative;
             background: #1E293B;
-            width: 50vh;
             min-height: 100vh;
             color: white;
-            padding:20px 70px;
+            padding:20px 38px;
+        }
+
+
+
+        .navbar-title {
+            margin: 0 55px;
         }
 
         .navbar-row {
@@ -34,10 +40,11 @@
 
         .nav-container {
             position: fixed;
+            width: 0;
             justify-content: center;
             padding: 20px 0;
-
         }
+
 
         .nav-link , .nav-link-ul{
             list-style: none;
@@ -47,13 +54,20 @@
         .nav-link-ul{
             display: flex;
             flex-direction: column;
-            margin-top: 30px;
+            align-items: flex-start;
+            margin-top: 60px;
             gap: 10px;
         }
 
         .nav-link-ul li{
+            background: #334155;
             display: flex;
             align-items: center;
+            width: 169px;
+            font-family: 'Inter', sans-serif;
+            border-radius: 8px;
+            font-weight: 600;
+            justify-content: center;
             margin: 10px 0;
         }
 
@@ -286,8 +300,9 @@
 
     <section id="Navbar">
         <div class="row navbar-row">
-             <h1 class="navbar-title">POS</h1>
              <div class="nav-container">
+                <h1 class="navbar-title">POS</h1>
+
                 <div class="d-flex flex-column gap-2">
                     <ul class="nav-link-ul">
                         <li class="active">
@@ -320,7 +335,6 @@
             </div>
         </div>
     </section>
-
 
     <section class="header">
 
@@ -737,7 +751,6 @@
             </div>
         </div>
     </section>
-
 
     </section>
 
