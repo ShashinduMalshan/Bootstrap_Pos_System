@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Point Of Sale</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="lib/fontawesome-free-5.15.4-web/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<!--    <link rel="stylesheet" href="Style.css">-->
+    <link rel="stylesheet" href="lib/fontawesome-free-6.7.2-web/css/all.min.css">
+
+    <!--    <link rel="stylesheet" href="Style.css">-->
     <link rel="stylesheet" href="lib/normalize.css">
 
     <style>
@@ -26,7 +27,6 @@
             color: white;
             padding:20px 38px;
         }
-
 
 
         .navbar-title {
@@ -69,6 +69,8 @@
             font-weight: 600;
             justify-content: center;
             margin: 10px 0;
+
+
         }
 
 
@@ -80,6 +82,13 @@
             margin: 10px 0;
 
         }
+
+        @media (max-width: 426px) {
+
+        .nav-link {
+            display: none;
+            background: #d60000;
+        }}
 
 
         .header {
@@ -515,7 +524,6 @@
 
     </style>
 
-
 </head>
 <body>
 
@@ -528,22 +536,22 @@
                     <ul class="nav-link-ul">
                         <li class="active">
                             <i class="fas fa-th-large"></i>
-                            <a class="p-1 rounded nav-link" href="#Dashboard">Dashboard</a>
+                            <a id="Dashboard" class="p-1 rounded nav-link" href="#Dashboard">Dashboard</a>
                         </li>
 
                         <li class="active">
                             <i class="fas fa-users"></i>
-                            <a class="p-1 rounded nav-link" href="#Customer">Customers</a>
+                            <a id="Customer" class="p-1 rounded nav-link" href="#Customer">Customers</a>
                         </li>
 
                         <li class="active">
                             <i class="fas fa-box"></i>
-                            <a class="p-1 rounded nav-link" href="#Item">Inventory</a>
+                            <a id="Item" class="p-1 rounded nav-link" href="#Item">Inventory</a>
                         </li>
 
                         <li class="active">
                             <i class="fas fa-shopping-cart"></i>
-                            <a class="p-1 rounded nav-link" href="#Order">Orders</a>
+                            <a id="Order" class="p-1 rounded nav-link" href="#Order">Orders</a>
                         </li>
 
                         <li class="active">
@@ -559,7 +567,7 @@
 
     <section class="header">
 
-        <section id="Dashboard" class="Dashboard-Section header">
+        <section id="Dashboard-Page" class="Dashboard-Section header">
              <div class="container-fluid">
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -687,7 +695,7 @@
 
         </section>
 
-        <section id="Customer" class="Customer-section header">
+        <section id="Customer-Page" class="Customer-section header">
             <div class="container-fluid">
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -695,9 +703,9 @@
                         <p class="page-subtitle">Manage your customer database and loyalty programs</p>
                     </div>
                     <div class="col-md-6 text-end d-flex justify-content-end align-items-center">
-                        <button class="btn btn-danger btn-remove me-2">Remove</button>
-                        <button class="btn btn-primary btn-update me-2">Update Customer</button>
-                        <button class="btn btn-primary btn-add">Add Customer</button>
+                        <button id="Remove" class="btn btn-danger btn-remove me-2">Remove</button>
+                        <button id="Update" class="btn btn-primary btn-update me-2">Update Customer</button>
+                        <button id="Add" class="btn btn-primary btn-add">Add Customer</button>
                     </div>
                 </div>
 
@@ -753,15 +761,17 @@
                         <thead>
                             <tr class="table-active">
                               <th scope="col">Id</th>
-                              <th scope="col">Customer Name</th>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Second Name</th>
                               <th scope="col">Email Address</th>
                               <th scope="col">Phone</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="customer-tbody">
                             <tr>
                               <th scope="row">1</th>
                               <td>Mark</td>
+                              <td>Otto</td>
                               <td>Otto</td>
                               <td>@mdo</td>
                             </tr>
@@ -769,11 +779,13 @@
                               <th scope="row">2</th>
                               <td>Jacob</td>
                               <td>Thornton</td>
+                              <td>Thornton</td>
                               <td>@fat</td>
                             </tr>
                             <tr>
                               <th scope="row">3</th>
                               <td>kamal</td>
+                              <td>Doe</td>
                               <td>Doe</td>
                               <td>@social</td>
                             </tr>
@@ -781,11 +793,13 @@
                               <th scope="row">4</th>
                               <td>John</td>
                               <td>Doe</td>
+                              <td>Doe</td>
                               <td>@social</td>
                             </tr>
                             <tr>
                               <th scope="row">5</th>
                               <td>arun</td>
+                              <td>Doe</td>
                               <td>Doe</td>
                               <td>@social</td>
                             </tr>
@@ -812,7 +826,7 @@
             </div>
         </section>
 
-        <section id="Item" class="Item-section header">
+        <section id="Item-Page" class="Item-section header">
             <div class="container-fluid">
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -822,7 +836,7 @@
                     <div class="col-md-6 text-end d-flex justify-content-end align-items-center">
                         <button class="btn btn-danger btn-remove me-2">Remove</button>
                         <button class="btn btn-primary btn-update me-2">Update Item</button>
-                        <button class="btn btn-primary btn-add">Add Item</button>
+                        <button id="addItem" class="btn btn-primary btn-add">Add Item</button>
                     </div>
                 </div>
 
@@ -847,7 +861,7 @@
                     <div class="col-md-12 form-Field-div">
 
                         <label class="form-label field-lable ">Item ID</label>
-                        <input type="name" class="form-control form-Field" id="inputItemId">
+                        <input type="text" class="form-control form-Field" id="inputItemId">
                     </div>
 
                     <div class="col-md-12 form-Field-div">
@@ -857,7 +871,7 @@
 
                     <div class="col-6 form-Field-div">
                         <label class="form-label field-lable">Qty</label>
-                        <input type="text" class="form-control form-Field" id="inputQty" >
+                        <input type="number" class="form-control form-Field" id="inputQty" >
                     </div>
 
                     <div class="col-md-6 form-Field-div">
@@ -878,7 +892,7 @@
                               <th scope="col">Price</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="item-tbody">
                             <tr>
                               <th scope="row">1</th>
                               <td>Mark</td>
@@ -932,7 +946,7 @@
             </div>
         </section>
 
-        <section id="Order" class="header">
+        <section id="Order-Page" class="header">
         <div class="container-fluid">
             <div class="row mb-3">
                 <div class="col-12">
@@ -961,7 +975,7 @@
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">1</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1109,9 +1123,50 @@
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
 
-<script>
+    <script type="module" src="Controller/CustomerController.js"></script>
+    <script type="module" src="Controller/ItemController.js"></script>
 
 
+    <script src="lib/jquery-3.7.1.min.js"></script>
+
+    <script>
+
+    $("#Customer-Page").css("display", "none");
+    $("#Item-Page").css("display", "none");
+    $("#Order-Page").css("display", "none");
+
+    $("#Customer").on("click", function(){
+        $("#Customer-Page").css("display", "block");
+        $("#Dashboard-Page").css("display", "none");
+        $("#Item-Page").css("display", "none");
+        $("#Order-Page").css("display", "none");
+
+    })
+
+
+    $("#Item").on("click", function(){
+        $("#Customer-Page").css("display", "none");
+        $("#Dashboard-Page").css("display", "none");
+        $("#Item-Page").css("display", "block");
+        $("#Order-Page").css("display", "none");
+
+    })
+
+    $("#Order").on("click", function(){
+        $("#Customer-Page").css("display", "none");
+        $("#Dashboard-Page").css("display", "none");
+        $("#Item-Page").css("display", "none");
+        $("#Order-Page").css("display", "block");
+
+    })
+
+    $("#Dashboard").on("click", function(){
+        $("#Customer-Page").css("display", "none");
+        $("#Dashboard-Page").css("display", "block");
+        $("#Item-Page").css("display", "none");
+        $("#Order-Page").css("display", "none");
+
+    })
 
 </script>
 
