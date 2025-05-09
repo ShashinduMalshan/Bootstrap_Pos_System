@@ -1,5 +1,6 @@
 export default class StudentModel {
-    constructor(fname, lname, address , phone , email) {
+    constructor(id, fname, lname, address , phone , email) {
+        this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.address = address;
