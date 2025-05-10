@@ -211,7 +211,7 @@
             font-size: 14px;
         }
 
-        /* Scale down proportionally on smaller screens */
+
         @media (max-width: 768px) {
             .search-wrapper {
                 transform: scale(0.9);
@@ -266,6 +266,7 @@
             border-spacing: 0 4px;
             border: transparent;
         }
+
 
         .my-table thead tr th {
 
@@ -946,7 +947,7 @@
                     <div class="col-md-12 form-Field-div">
 
                         <label class="form-label field-lable ">Item ID</label>
-                        <input type="text" class="form-control form-Field" id="inputItemId">
+                        <input type="text" class="form-control form-Field" id="inputItemId" readonly>
                     </div>
 
                     <div class="col-md-12 form-Field-div">
@@ -1047,7 +1048,7 @@
 
                                 <div class="col-12 mb-1 form-Field-div">
                                     <label class="form-label ">Name</label>
-                                    <input type="text" class="form-control " id="inputCustomerName">
+                                    <input type="text" class="form-control " id="inputCustomerName" readonly>
                                 </div>
                             </form>
                         </div>
@@ -1073,20 +1074,26 @@
                                         </div>
                                 </div>
 
-                                <div class="col-12 mb-3 form-Field-div">
+                                <div class="col-6 mb-3 form-Field-div">
                                     <label class="form-label ">Item Name</label>
-                                    <input type="name" class="form-control " id="OrderInputName">
+                                    <input type="name" class="form-control " id="OrderInputName" readonly>
                                 </div>
 
                                 <div class="col-6 mb-3 form-Field-div">
-                                    <label class="form-label ">Qty</label>
-                                    <input type="text" class="form-control " id="OrderInputQty">
+                                    <label class="form-label ">Qty On Hand</label>
+                                    <input type="number" class="form-control " id="qtyOnHand" readonly>
                                 </div>
 
                                 <div class="col-6 mb-3 form-Field-div">
                                     <label class="form-label ">Price</label>
-                                    <input type="number" class="form-control " id="OrderInputPrice">
+                                    <input type="number" class="form-control " id="OrderInputPrice" readonly>
                                 </div>
+
+                                <div class="col-6 mb-3 form-Field-div">
+                                    <label class="form-label ">Qty</label>
+                                    <input type="number" class="form-control " id="OrderInputQty" placeholder="Input Qty">
+                                </div>
+
 
                                 <div class="col-12 mb-1 form-Field-div text-end">
                                     <button id="Add-Item" type="button" class="btn btn-danger addBtn">Add Item</button>
@@ -1152,24 +1159,24 @@
 
                     <div class="col-12 col-lg-3">
                         <div class="total-section card mb-2">
-                            <p class="total-label">Total : 10418.5 Rs/=</p>
-                            <p class="subtotal-label">SubTotal : 9376.65Rs/=</p>
+                            <p id="total-label" class="total-label">Total : 0 Rs/=</p>
+                            <p id="subtotal-label" class="subtotal-label">SubTotal : 9376.65Rs/=</p>
                         </div>
 
                         <div class="mb-3">
                             <div class="discount-lable">Discount</div>
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" value="10">
+                                <input type="text" class="form-control" value="10" readonly>
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button"></button>
                             </div>
 
                             <div class="cash-lable">Cash</div>
-                            <input type="text" class="form-control mb-3" value="15000">
+                            <input id="cash" type="text" class="form-control mb-3" value="15000">
 
                             <div class="balance-lable">Balance</div>
-                            <input type="text" class="form-control mb-4" value="4581.5" readonly>
+                            <input id="balance" type="number" class="form-control mb-4" value="4581.5" readonly>
 
-                            <button class="btn-purchase">Purchase</button>
+                            <button id="btn-purchase" class="btn-purchase">Purchase</button>
                         </div>
                     </div>
                 </div>

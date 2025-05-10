@@ -1,8 +1,25 @@
 import {customer_db, item_db,} from "../DB/Db.js";
 import ItemModel from "../Model/ItemModel.js";
-import { setItemIds } from '../Controller/OrderController.js';
+import {setCustomerIds, setItemIds} from '../Controller/OrderController.js';
+import CustomerModel from "../Model/CustomerModel.js";
 
 let rowIndex;
+
+
+if (localStorage.getItem("item_data")) {
+    let raw = JSON.parse(localStorage.getItem("item_data"));
+
+    let loaded = raw.map(i => new ItemModel(i.id,i.name,i.qty,i.price));
+    item_db.length = 0;
+    item_db.push(...loaded);
+}
+
+
+$(document).ready(function() {
+    reset();
+    loadItem();
+    setItemIds();
+});
 
 
 function nextId(){
@@ -22,6 +39,9 @@ function nextId(){
 
 function loadItem(){
     $('#item-tbody').empty();
+
+        let id = $('#inputItemId').val();
+
     item_db.map((item , index)=> {
             let id = item.id;
             let name = item.name;
@@ -50,6 +70,8 @@ $('#update-Item').on('click', function(){
 
     let item_data = new ItemModel(id, name, qty, price);
     item_db.splice(item_db.findIndex(item => item.id === id), 1, item_data);
+    localStorage.setItem("item_data", JSON.stringify(item_db));
+
     loadItem();
 
     reset();
@@ -67,6 +89,8 @@ $('#addItem').on('click', function(){
 
     let item_data = new ItemModel(id, name, qty, price);
     item_db.push(item_data);
+    localStorage.setItem("item_data", JSON.stringify(item_db));
+
     loadItem();
     setItemIds();
 
@@ -95,7 +119,7 @@ $("#item-tbody").on('click', 'tr', function(){
 
 $('#item-reset-button').on('click', function(){
 
-    reset()
+    reset();
 });
 
 function reset(){
@@ -103,6 +127,8 @@ function reset(){
     $('#inputName').val('');
     $('#inputQty').val('');
     $('#inputPrice').val('');
+    $('#item-search-input').val('');
+    $('#item-tbody tr').css('background-color', '').removeClass('highlight');
 
 }
 
@@ -114,7 +140,10 @@ $('#Remove-Item').on('click', function(){
 
 
         item_db.splice(rowIndex,1);
+        localStorage.setItem("item_data", JSON.stringify(item_db));
+
         loadItem();
+        reset();
         setItemIds();
 
 });

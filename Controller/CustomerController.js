@@ -5,6 +5,21 @@ import { setCustomerIds } from '../Controller/OrderController.js';
 let id ;
 let rowIndex;
 
+if (localStorage.getItem("customer_data")) {
+    let raw = JSON.parse(localStorage.getItem("customer_data"));
+
+    let loaded = raw.map(c => new CustomerModel(c.id, c.fname, c.lname, c.address, c.phone, c.email));
+    customer_db.length = 0;
+    customer_db.push(...loaded);
+}
+
+
+$(document).ready(function() {
+    loadCustomer();
+    setCustomerIds();
+});
+
+
 function loadCustomer(){
     $('#customer-tbody').empty();
     customer_db.map((item , index)=> {
@@ -81,21 +96,32 @@ $('#Add').on('click', function() {
     let customer_data = new CustomerModel(id, fname, lname, address, phone, email);
     customer_db.push(customer_data);
 
-        localStorage.setItem('customer_db');
+    localStorage.setItem("customer_data", JSON.stringify(customer_db));
 
 
     loadCustomer();
     setCustomerIds();
+    reset();
+
 });
 
+
 $('#reset-button').on('click', function() {
-    $('#inputFname').val(nextId());
+   reset();
+});
+
+
+function reset(){
+     $('#inputFname').val('');
     $('#inputLname').val('');
     $('#inputAddress').val('');
     $('#inputPhone').val('');
     $('#inputEmail').val('');
     $('#inputId').val('');
-});
+    $('#search-input').val('');
+    $('#customer-tbody tr').css('background-color', '').removeClass('highlight');
+
+}
 
 
 $('#Update').on('click', function() {
@@ -109,8 +135,11 @@ $('#Update').on('click', function() {
 
     let customer_data = new CustomerModel(id, fname, lname, address, phone, email);
     customer_db.splice(customer_db.findIndex(item => item.id === id), 1, customer_data);
+    localStorage.setItem("customer_data", JSON.stringify(customer_db));
+
     loadCustomer();
     setCustomerIds();
+    reset();
 
 });
 
@@ -118,8 +147,10 @@ $('#Update').on('click', function() {
 $('#Remove').on('click', function() {
 
    customer_db.splice(rowIndex, 1);
+   localStorage.setItem("customer_data", JSON.stringify(customer_db));
    loadCustomer();
    setCustomerIds();
+   reset();
 
 });
 
