@@ -118,7 +118,7 @@ function loadOrder(){
                             <td>${price}</td>
                             <td>${qty}</td>
                             <td> <button class="table-remove-btn">
-                                    <i class="bi bi-trash"></i>
+                                    <i class=" bi bi-trash"></i>
                                     </button>
                             </td>
                             </tr>`
@@ -140,7 +140,6 @@ function getItemByUd(id) {
 
 
 $('#Add-Item').on('click', function () {
-
     let itemId = $('#inputItemIds').val();
     let itemName = $('#OrderInputName').val();
     let qty = $('#OrderInputQty').val();
@@ -151,30 +150,44 @@ $('#Add-Item').on('click', function () {
     loadOrder();
     setTotal();
 
-     $('#inputItemIds').val('');
+    $('#inputItemIds').val('');
     $('#OrderInputName').val('');
     $('#OrderInputQty').val('');
     $('#OrderInputPrice').val('');
     $('#qtyOnHand').val('');
 
+
 });
 
 $('#btn-purchase').on('click', function () {
-
     let orderId = $('#inputOrderId').val();
     let cusId = $('#inputCustomerId').val();
     let date = $('#inputDate').val();
 
-
-
-    let orderDetailsData = new Order_details(orderId, cusId, [...order_db], date);
-    order_details_db.push(orderDetailsData);
-    subtractQty();
-    console.log(order_db);
-    console.log(order_details_db);
-    reset();
-
-
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Complete this purchase?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, complete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let orderDetailsData = new Order_details(orderId, cusId, [...order_db], date);
+            order_details_db.push(orderDetailsData);
+            subtractQty();
+            reset();
+            
+            Swal.fire({
+                title: 'Success!',
+                text: 'Purchase completed successfully',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    });
 });
 
 
@@ -200,19 +213,21 @@ function setTotal() {
     $('#total-label').text('Total : ' + total.toFixed(2) + ' Rs/=');
 }
 
+
 function setSubTotal() {
-    subTotal = 0;
-
-    subTotal += total-($('#disInput').val() / 100 * 45);
-
+    let discount = parseFloat($('#disInput').val()) || 0;
+    subTotal = total - (discount / 100 * 45);
     $('#subtotal-label').text('SubTotal : ' + subTotal.toFixed(2) + ' Rs/=');
 }
 
+// When a dropdown item is clicked
 $('.dropdown-menu .dropdown-item').on('click', function(e) {
     e.preventDefault();
-    const selectedValue = $(this).text();
-    $('#disInput').val(selectedValue);
+    const selected = $(this).text();
+    $('#disInput').val(selected);
+    setSubTotal();
 });
+
 
 
 $('#cash').on('keyup', function () {
@@ -239,3 +254,12 @@ function updatePriceField() {
 }
 
 
+$(document).on('click', '.table-remove-btn', function () {
+
+    const itemId = $(this).closest('tr').find('td:first').text();
+    const index = order_db.findIndex(item => item.id === itemId);
+    order_db.splice(index, 1);
+    loadOrder();
+    setTotal();
+
+});

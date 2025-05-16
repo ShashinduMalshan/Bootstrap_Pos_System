@@ -77,10 +77,15 @@ $('#update-Item').on('click', function(){
     localStorage.setItem("item_data", JSON.stringify(item_db));
 
     loadItem();
-
     reset();
 
-
+    Swal.fire({
+        title: 'Success!',
+        text: 'Item updated successfully',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+    });
 });
 
 
@@ -101,9 +106,15 @@ $('#addItem').on('click', function(){
 
     loadItem();
     setItemIds();
-
     reset();
 
+    Swal.fire({
+        title: 'Success!',
+        text: 'Item added successfully',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+    });
 });
 
 
@@ -142,23 +153,38 @@ function reset(){
 
 
 $('#Remove-Item').on('click', function(){
+    const idToRemove = $('#inputItemId').val().trim();
+    const index = item_db.findIndex(item => item.id === idToRemove);
 
-        const idToRemove = $('#inputItemId').val().trim();
-        const index = item_db.findIndex(item => item.id === idToRemove);
-
-
-
-        if (index !== nextId()&& index !==-1) {
-            item_db.splice(index, 1);
-        }else {
-            alert("Select Item First")
-        }
-        localStorage.setItem("item_data", JSON.stringify(item_db));
-
-        loadItem();
-        reset();
-        setItemIds();
-
+    if (index !== nextId() && index !== -1) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                item_db.splice(index, 1);
+                localStorage.setItem("item_data", JSON.stringify(item_db));
+                loadItem();
+                reset();
+                setItemIds();
+                
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Item has been deleted',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+        });
+    } else {
+        alert("Select Item First");
+    }
 });
 
 
@@ -206,7 +232,7 @@ function validate(){
         return false;
     }
 
-    const nameRegex = /^[A-Za-z]+$/;
+    const nameRegex = /^[A-Za-z\s]+$/;
     if (!nameRegex.test(name)) {
         $('#inputName').addClass('input-error');
             alert("Names should contain only letters.");

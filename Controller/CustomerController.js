@@ -86,11 +86,9 @@ return id
 
 
 $('#Add').on('click', function() {
-
     if (!validate()) {
         return
     }
-
 
     id = nextId();
     var fname = $('#inputFname').val();
@@ -99,17 +97,21 @@ $('#Add').on('click', function() {
     var phone = $('#inputPhone').val();
     var email = $('#inputEmail').val();
 
-
     let customer_data = new CustomerModel(id, fname, lname, address, phone, email);
     customer_db.push(customer_data);
-
     localStorage.setItem("customer_data", JSON.stringify(customer_db));
-
 
     loadCustomer();
     setCustomerIds();
     reset();
 
+    Swal.fire({
+        title: 'Success!',
+        text: 'Customer added successfully',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+    });
 });
 
 
@@ -134,11 +136,9 @@ function reset(){
 
 
 $('#Update').on('click', function() {
-
-     if (!validate()) {
+    if (!validate()) {
         return
     }
-
 
     let fname = $('#inputFname').val();
     let lname = $('#inputLname').val();
@@ -154,24 +154,48 @@ $('#Update').on('click', function() {
     setCustomerIds();
     reset();
 
+    Swal.fire({
+        title: 'Success!',
+        text: 'Customer updated successfully',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+    });
 });
 
 
 $('#Remove').on('click', function() {
-
     const index = customer_db.findIndex(item => item.id === id);
 
-    if (index !== nextId()&& index !==-1) {
-        customer_db.splice(index, 1);
-    }else {
-        alert("Select Customer First")
+    if (index !== nextId() && index !== -1) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                customer_db.splice(index, 1);
+                localStorage.setItem("customer_data", JSON.stringify(customer_db));
+                loadCustomer();
+                setCustomerIds();
+                reset();
+                
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Customer has been deleted',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+        });
+    } else {
+        alert("Select Customer First");
     }
-    localStorage.setItem("customer_data", JSON.stringify(customer_db));
-
-   loadCustomer();
-   setCustomerIds();
-   reset();
-
 });
 
 
@@ -218,7 +242,7 @@ function validate(){
         return false;
     }
 
-    const nameRegex = /^[A-Za-z]+$/;
+    const nameRegex = /^[A-Za-z\s]+$/;
     if (!nameRegex.test(fname)) {
         $('#inputFname').addClass('input-error');
             alert("First names should contain only letters.");
