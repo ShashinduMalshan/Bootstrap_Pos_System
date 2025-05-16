@@ -2,6 +2,8 @@ import {order_db, customer_db, item_db, order_details_db} from "../DB/Db.js";
 import OrderModel from "../Model/OrderModel.js";
 import Order_details from "../Model/Order_details.js";
 
+let total;
+let subTotal;
 
 
 $(document).ready(function() {
@@ -93,7 +95,7 @@ export function setItemIds(){
             input.value = this.textContent;
             $('#OrderInputName').val(getItemByUd(this.textContent).name);
             $('#qtyOnHand').val(getItemByUd(this.textContent).qty);
-            $('#OrderInputPrice').val(getItemByUd(this.textContent).price);
+
         });
 
         li.appendChild(a);
@@ -139,12 +141,6 @@ function getItemByUd(id) {
 
 $('#Add-Item').on('click', function () {
 
-    let orderId = $('#inputOrderId').val();
-    let cusId = $('#inputCustomerId').val();
-    let date = $('#inputDate').val();
-    let cusName = $('#inputCustomerName').val();
-
-
     let itemId = $('#inputItemIds').val();
     let itemName = $('#OrderInputName').val();
     let qty = $('#OrderInputQty').val();
@@ -155,6 +151,12 @@ $('#Add-Item').on('click', function () {
     loadOrder();
     setTotal();
 
+     $('#inputItemIds').val('');
+    $('#OrderInputName').val('');
+    $('#OrderInputQty').val('');
+    $('#OrderInputPrice').val('');
+    $('#qtyOnHand').val('');
+
 });
 
 $('#btn-purchase').on('click', function () {
@@ -162,14 +164,7 @@ $('#btn-purchase').on('click', function () {
     let orderId = $('#inputOrderId').val();
     let cusId = $('#inputCustomerId').val();
     let date = $('#inputDate').val();
-    let cusName = $('#inputCustomerName').val();
 
-
-    let itemId = $('#inputItemIds').val();
-    let itemName = $('#OrderInputName').val();
-    let qty = $('#OrderInputQty').val();
-    let price = $('#OrderInputPrice').val();
-    let qtyOnHand = $('#qtyOnHand').val();
 
 
     let orderDetailsData = new Order_details(orderId, cusId, [...order_db], date);
@@ -195,11 +190,52 @@ function subtractQty() {
 
 
 function setTotal() {
-    let total = 0;
+    total = 0;
 
     order_db.forEach(orderItem => {
         total += parseFloat(orderItem.price);
+        setSubTotal();
     });
 
     $('#total-label').text('Total : ' + total.toFixed(2) + ' Rs/=');
 }
+
+function setSubTotal() {
+    subTotal = 0;
+
+    subTotal += total-($('#disInput').val() / 100 * 45);
+
+    $('#subtotal-label').text('SubTotal : ' + subTotal.toFixed(2) + ' Rs/=');
+}
+
+$('.dropdown-menu .dropdown-item').on('click', function(e) {
+    e.preventDefault();
+    const selectedValue = $(this).text();
+    $('#disInput').val(selectedValue);
+});
+
+
+$('#cash').on('keyup', function () {
+    let cash = parseFloat($(this).val());
+    if (!isNaN(cash)) {
+        let subtractBalance = cash - subTotal;
+        $('#balance').val(subtractBalance.toFixed(2));
+    }
+});
+
+$('#OrderInputQty').on('input', updatePriceField);
+
+function updatePriceField() {
+    const qty = parseInt($('#OrderInputQty').val());
+    const itemId = $('#inputItemIds').val();
+    const item = getItemByUd(itemId);
+
+    if (item && !isNaN(qty)) {
+        const totalPrice = item.price * qty;
+        $('#OrderInputPrice').val(totalPrice.toFixed(2));
+    } else {
+        $('#OrderInputPrice').val('');
+    }
+}
+
+

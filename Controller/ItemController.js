@@ -63,6 +63,10 @@ function loadItem(){
 
 $('#update-Item').on('click', function(){
 
+    if (!validate()) {
+        return
+    }
+
     let id = $('#inputItemId').val();
     let name = $('#inputName').val();
     let qty = $('#inputQty').val();
@@ -81,6 +85,10 @@ $('#update-Item').on('click', function(){
 
 
 $('#addItem').on('click', function(){
+
+    if (!validate()) {
+        return
+    }
 
     let id = nextId();
     var name = $('#inputName').val();
@@ -135,11 +143,16 @@ function reset(){
 
 $('#Remove-Item').on('click', function(){
 
-        let val = $('#inputItemId').val();
-        console.log(val + " val ");
+        const idToRemove = $('#inputItemId').val().trim();
+        const index = item_db.findIndex(item => item.id === idToRemove);
 
 
-        item_db.splice(rowIndex,1);
+
+        if (index !== nextId()&& index !==-1) {
+            item_db.splice(index, 1);
+        }else {
+            alert("Select Item First")
+        }
         localStorage.setItem("item_data", JSON.stringify(item_db));
 
         loadItem();
@@ -164,18 +177,60 @@ $('#item-search-btn').on('click', function() {
 
             if (rowId === searchItem) {
                 console.log(rowId);
-            $(this).addClass('highlight');
+                $(this).addClass('highlight');
 
-                $('.customer-table').animate({
-                    scrollTop: $('.customer-table').scrollTop() + $(this).position().top
-                }, 300);
+                    $('.customer-table').animate({
+                        scrollTop: $('.customer-table').scrollTop() + $(this).position().top
+                    }, 300);
 
-            }
-        });
 
-    } else {
-        alert("Item not found!");
+            }});
+
+
+    }else {
+        alert("Please enter a customer ID.");
+    }});
+
+
+function validate(){
+
+    let id = $('#inputItemId').val().trim();
+    let name = $('#inputName').val().trim();
+    let qty = $('#inputQty').val().trim();
+    let price = $('#inputPrice').val().trim();
+
+
+    if (!id || !name || !qty  || !price) {
+
+        alert("All fields are required.");
+        return false;
     }
-});
 
+    const nameRegex = /^[A-Za-z]+$/;
+    if (!nameRegex.test(name)) {
+        $('#inputName').addClass('input-error');
+            alert("Names should contain only letters.");
+            return false;
+    }
+
+    const qtyRegex = /^[1-9]\d{0,9}$/;
+    if (!qtyRegex.test(qty)) {
+        $('#inputQty').addClass('input-error');
+        alert("Quantity should be a positive whole number without leading zeros.");
+        return false;
+    }
+
+    const priceRegex = /^(?!0\d)\d+(\.\d{1,2})?$/; // Positive number, optional 1-2 decimal places, no leading zeros
+    if (!priceRegex.test(price)) {
+        $('#inputPrice').addClass('input-error');
+        alert("Price should be a positive number with up to two decimal places and no leading zeros.");
+        return false;
+    }
+
+    return true
+}
+
+$('#inputName, #inputQty, #inputPrice').on('input', function () {
+    $(this).removeClass('input-error');
+});
 

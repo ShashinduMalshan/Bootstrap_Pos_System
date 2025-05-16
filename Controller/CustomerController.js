@@ -1,4 +1,4 @@
-import {customer_db} from "../DB/Db.js";
+import {customer_db, item_db} from "../DB/Db.js";
 import CustomerModel from "../Model/CustomerModel.js";
 import { setCustomerIds } from '../Controller/OrderController.js';
 
@@ -86,12 +86,19 @@ return id
 
 
 $('#Add').on('click', function() {
-    let id = nextId();
+
+    if (!validate()) {
+        return
+    }
+
+
+    id = nextId();
     var fname = $('#inputFname').val();
     var lname = $('#inputLname').val();
     var address = $('#inputAddress').val();
     var phone = $('#inputPhone').val();
     var email = $('#inputEmail').val();
+
 
     let customer_data = new CustomerModel(id, fname, lname, address, phone, email);
     customer_db.push(customer_data);
@@ -112,7 +119,8 @@ $('#reset-button').on('click', function() {
 
 
 function reset(){
-     $('#inputFname').val('');
+
+    $('#inputFname').val('');
     $('#inputLname').val('');
     $('#inputAddress').val('');
     $('#inputPhone').val('');
@@ -120,11 +128,16 @@ function reset(){
     $('#inputId').val('');
     $('#search-input').val('');
     $('#customer-tbody tr').css('background-color', '').removeClass('highlight');
+    $('#inputFname, #inputLname, #inputPhone').removeClass('input-error');
 
 }
 
 
 $('#Update').on('click', function() {
+
+     if (!validate()) {
+        return
+    }
 
 
     let fname = $('#inputFname').val();
@@ -146,18 +159,20 @@ $('#Update').on('click', function() {
 
 $('#Remove').on('click', function() {
 
-   customer_db.splice(rowIndex, 1);
-   localStorage.setItem("customer_data", JSON.stringify(customer_db));
+    const index = customer_db.findIndex(item => item.id === id);
+
+    if (index !== nextId()&& index !==-1) {
+        customer_db.splice(index, 1);
+    }else {
+        alert("Select Customer First")
+    }
+    localStorage.setItem("customer_data", JSON.stringify(customer_db));
+
    loadCustomer();
    setCustomerIds();
    reset();
 
 });
-
-
-function getCustomerByUd(id) {
-  return customer_db.find(item => item.id === id);
-}
 
 
 $('#search-btn').on('click', function () {
@@ -188,4 +203,44 @@ $('#search-btn').on('click', function () {
     } else {
         alert("Please enter a customer ID.");
     }
+});
+
+function validate(){
+
+    var fname = $('#inputFname').val().trim();
+    var lname = $('#inputLname').val().trim();
+    var address = $('#inputAddress').val().trim();
+    var phone = $('#inputPhone').val().trim();
+
+    if (!fname || !lname || !address  || !phone) {
+
+        alert("All fields are required.");
+        return false;
+    }
+
+    const nameRegex = /^[A-Za-z]+$/;
+    if (!nameRegex.test(fname)) {
+        $('#inputFname').addClass('input-error');
+            alert("First names should contain only letters.");
+            return false;
+    }
+
+    if (!nameRegex.test(lname)) {
+        $('#inputLname').addClass('input-error');
+
+            alert("Last names should contain only letters.");
+            return false;
+    }
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+        $('#inputPhone').addClass('input-error');
+        alert("Phone number should be exactly 10 digits.");
+        return false;
+    }
+    return true
+}
+
+$('#inputFname, #inputLname, #inputPhone').on('input', function () {
+    $(this).removeClass('input-error');
 });

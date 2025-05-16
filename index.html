@@ -626,6 +626,13 @@
             color: #1a2942;
             line-height: 1;
         }
+
+        .input-error {
+            border: 2px solid red !important;
+            border-radius: 12px;
+        }
+
+
     </style>
 
 </head>
@@ -1160,21 +1167,27 @@
                     <div class="col-12 col-lg-3">
                         <div class="total-section card mb-2">
                             <p id="total-label" class="total-label">Total : 0 Rs/=</p>
-                            <p id="subtotal-label" class="subtotal-label">SubTotal : 9376.65Rs/=</p>
+                            <p id="subtotal-label" class="subtotal-label">SubTotal : 0 Rs/=</p>
                         </div>
 
                         <div class="mb-3">
                             <div class="discount-lable">Discount</div>
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control" value="10" readonly>
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"></button>
+                            <div class="input-group mb-2 dropdown">
+                                <input id="disInput" type="text" class="form-control" value="0" readonly>
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">0</a></li>
+                                    <li><a class="dropdown-item" href="#">10</a></li>
+                                    <li><a class="dropdown-item" href="#">15</a></li>
+                                    <li><a class="dropdown-item" href="#">25</a></li>
+                                </ul>
                             </div>
 
                             <div class="cash-lable">Cash</div>
-                            <input id="cash" type="text" class="form-control mb-3" value="15000">
+                            <input id="cash" type="text" class="form-control mb-3" value="0">
 
                             <div class="balance-lable">Balance</div>
-                            <input id="balance" type="number" class="form-control mb-4" value="4581.5" readonly>
+                            <input id="balance" type="number" class="form-control mb-4" value="0" readonly>
 
                             <button id="btn-purchase" class="btn-purchase">Purchase</button>
                         </div>
