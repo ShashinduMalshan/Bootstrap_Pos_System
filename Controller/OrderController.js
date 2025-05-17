@@ -1,10 +1,19 @@
 import {order_db, customer_db, item_db, order_details_db} from "../DB/Db.js";
 import OrderModel from "../Model/OrderModel.js";
 import Order_details from "../Model/Order_details.js";
+import Order_details_Model from "../Model/Order_details.js";
 
 let total;
 let subTotal;
 
+
+if (localStorage.getItem("order_data")) {
+    let raw = JSON.parse(localStorage.getItem("order_data"));
+
+    let loaded = raw.map(o => new Order_details_Model(o.oId, o.cId, o.order_data,o.date, o.qty));
+    order_details_db.length = 0;
+    order_details_db.push(...loaded);
+}
 
 $(document).ready(function() {
     reset();
@@ -140,6 +149,11 @@ function getItemByUd(id) {
 
 
 $('#Add-Item').on('click', function () {
+
+    if (!validate()) {
+        return
+    }
+
     let itemId = $('#inputItemIds').val();
     let itemName = $('#OrderInputName').val();
     let qty = $('#OrderInputQty').val();
@@ -160,6 +174,13 @@ $('#Add-Item').on('click', function () {
 });
 
 $('#btn-purchase').on('click', function () {
+
+    if (!validatePurchase()) {
+        return
+    }
+
+
+
     let orderId = $('#inputOrderId').val();
     let cusId = $('#inputCustomerId').val();
     let date = $('#inputDate').val();
@@ -176,6 +197,8 @@ $('#btn-purchase').on('click', function () {
         if (result.isConfirmed) {
             let orderDetailsData = new Order_details(orderId, cusId, [...order_db], date);
             order_details_db.push(orderDetailsData);
+            localStorage.setItem("order_data", JSON.stringify(order_details_db));
+
             subtractQty();
             reset();
             
@@ -263,3 +286,62 @@ $(document).on('click', '.table-remove-btn', function () {
     setTotal();
 
 });
+
+
+
+function validate() {
+
+    let id = $('#inputCustomerId').val();
+    let date = $('#inputDate').val();
+    let itemId = $('#inputItemIds').val();
+    let qty = $('#OrderInputQty').val();
+
+    if (!id ){
+        alert("Please select a customer");
+        return;
+    }
+
+    if (!date ){
+        alert("Please select a date");
+        return;
+    }
+
+    if (!itemId ){
+        alert("Please select an item");
+        return;
+    }
+
+    if (!qty){
+        alert("Please enter a quantity");
+        return;
+    }
+    if (!parseInt(qty) > 0){
+        alert("Quantity should be greater than 0");
+        return;
+    }
+
+return true;
+}
+
+function validatePurchase() {
+
+    let cash = $('#cash').val();
+    let balance = $('#balance').val();
+
+    if (!cash ){
+        alert("Please enter a cash amount");
+        return;
+    }
+    if (parseInt(cash) < 0){
+        alert("Cash amount should be greater than 0");
+        return;
+    }
+
+    if (parseInt(cash) < parseInt(subTotal)) {
+        alert("Cash amount should be greater than or equal to subtotal");
+        return;
+    }
+
+    return true;
+
+}

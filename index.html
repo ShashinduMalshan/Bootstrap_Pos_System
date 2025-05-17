@@ -29,12 +29,21 @@
             padding:20px 38px;
         }
 
-        @media all and (max-width: 767px) {
-            #Navbar {
-            display: none;
-        }
+        @media all and (max-width: 1024px) {
+            .nav-link{
+                display: none;
+            }
+            .nav-link-ul li{
+                width: 0 !important;
+                padding: 17px 3px;
+                margin: 0;
+                justify-content: center;
 
-        }
+            }
+
+            body {
+            grid-template-columns: 75px 1fr;
+        }}
 
 
 
@@ -674,7 +683,7 @@
 
                         <li class="active">
                             <i class="fas fa-cog"></i>
-                            <a class="p-1 rounded nav-link" href="#Setting">Settings</a>
+                            <a id="Target" class="p-1 rounded nav-link" href="#Target-Page">Settings</a>
                         </li>
 
                     </ul>
@@ -1037,18 +1046,18 @@
                             <form class="row p-2 m-0">
                                 <div class="col-12 mb-3 form-Field-div">
                                     <label class="form-label ">Order ID</label>
-                                    <input id="inputOrderId" type="name" class="form-control" >
+                                    <input id="inputOrderId" type="name" class="form-control" readonly>
                                 </div>
 
                                 <div class="col-12 col-md-6 mb-3 form-Field-div">
                                     <label class="form-label ">Customer ID</label>
                                     <div class="input-group">
-                                        <input id="inputCustomerId" type="text" class="form-control" aria-label="Text input with dropdown button">
+                                        <input id="inputCustomerId" type="text" class="form-control" aria-label="Text input with dropdown button" readonly>
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         </button>
                                         <ul id="dropdownList" class="dropdown-menu dropdown-menu-end">
 
-                                            </ul>
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -1191,7 +1200,7 @@
                             </div>
 
                             <div class="cash-lable">Cash</div>
-                            <input id="cash" type="text" class="form-control mb-3" value="0">
+                            <input id="cash" type="text" class="form-control mb-3"  placeholder="Enter cash amount (Rs)">
 
                             <div class="balance-lable">Balance</div>
                             <input id="balance" type="number" class="form-control mb-4" value="0" readonly>
@@ -1203,6 +1212,75 @@
             </div>
         </div>
     </section>
+
+        <section id="Target-Page" class="header">
+            <div class="container-fluid">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h1 class="page-title">Target</h1>
+                        <p class="page-subtitle">Track your sales targets and manage your loyalty programs</p>
+                    </div>
+                </div>
+
+                 <div class="search-area">
+                        <div class="search-wrapper">
+                            <div class="label-container">
+                                <label id="order-SearchBar" class="form-label searchBar-lable">Search Ordes</label>
+                            </div>
+                            <div class="search-container">
+                                <input id="order-search-input" type="text" class="search-input" placeholder="Search...">
+                                <button class="search-button">
+                                    <i id="order-search-btn" class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="reset-btn-container">
+                                <button id="order-reset-button" class="reset-btn">Reset</button>
+                            </div>
+                        </div>
+                </div>
+                <br>
+
+
+                <br>
+
+                <div class="customer-table">
+                    <table class="table table-hover my-table ">
+                        <thead>
+                            <tr class="table-active">
+                              <th scope="col">OderId</th>
+                              <th scope="col">Date</th>
+                              <th scope="col">Customer Name</th>
+                              <th scope="col">Items</th>
+                              <th scope="col">Total</th>
+
+                            </tr>
+                          </thead>
+                          <tbody id="orderDetails-tbody">
+
+                          </tbody>
+                    </table>
+                </div>
+
+                <div class="customer-table">
+                    <table class="table table-hover my-table ">
+                        <thead>
+                            <tr class="table-active">
+                              <th scope="col">Item Id</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Qty</th>
+                              <th scope="col">Price</th>
+                            </tr>
+                          </thead>
+                          <tbody id="ItemDetails-tbody">
+
+                          </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </section>
 
     </section>
 
@@ -1218,6 +1296,7 @@
     <script type="module" src="Controller/CustomerController.js"></script>
     <script type="module" src="Controller/ItemController.js"></script>
     <script type="module" src="Controller/OrderController.js"></script>
+    <script type="module" src="Controller/OrderDetailsController.js"></script>
 
 <script>
 
@@ -1232,7 +1311,7 @@
 
     $(document).ready(function () {
 
-        $("#Customer-Page, #Item-Page, #Order-Page, #Dashboard-Page").css("display", "none");
+        $("#Customer-Page, #Item-Page, #Order-Page, #Dashboard-Page,#Target-Page").css("display", "none");
 
 
         var lastLoadedPage = getLastPage();
@@ -1245,26 +1324,32 @@
 
     $("#Customer").on("click", function () {
         $("#Customer-Page").css("display", "block");
-        $("#Dashboard-Page, #Item-Page, #Order-Page").css("display", "none");
+        $("#Dashboard-Page, #Item-Page, #Order-Page,#Target-Page").css("display", "none");
         setLastPage('Customer-Page');
     });
 
     $("#Item").on("click", function () {
         $("#Item-Page").css("display", "block");
-        $("#Customer-Page, #Dashboard-Page, #Order-Page").css("display", "none");
+        $("#Customer-Page, #Dashboard-Page, #Order-Page,#Target-Page").css("display", "none");
         setLastPage('Item-Page');
     });
 
     $("#Order").on("click", function () {
         $("#Order-Page").css("display", "block");
-        $("#Customer-Page, #Dashboard-Page, #Item-Page").css("display", "none");
+        $("#Customer-Page, #Dashboard-Page, #Item-Page,#Target-Page").css("display", "none");
         setLastPage('Order-Page');
     });
 
     $("#Dashboard").on("click", function () {
         $("#Dashboard-Page").css("display", "block");
-        $("#Customer-Page, #Item-Page, #Order-Page").css("display", "none");
+        $("#Customer-Page, #Item-Page, #Order-Page,#Target-Page").css("display", "none");
         setLastPage('Dashboard-Page');
+    });
+
+    $("#Target").on("click", function () {
+        $("#Target-Page").css("display", "block");
+        $("#Customer-Page, #Item-Page, #Order-Page,#Dashboard-Page").css("display", "none");
+        setLastPage('Target-Page');
     });
 </script>
 
