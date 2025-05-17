@@ -739,72 +739,12 @@
             border-radius: 12px;
         }
 
-        /* Mobile Toggle Button Styles */
-        .mobile-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: #1E293B;
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-toggle:hover {
-            background: #334155;
-        }
-
-        .mobile-toggle i {
-            font-size: 20px;
-        }
-
-        @media all and (max-width: 992px) {
-            .mobile-toggle {
-                display: block;
-            }
-
-            #Navbar.nav-collapsed {
-                width: 0;
-                padding: 0;
-                overflow: hidden;
-            }
-
-            #Navbar.nav-expanded {
-                width: 240px;
-                padding: 20px;
-            }
-
-            .nav-container {
-                transition: all 0.3s ease;
-            }
-
-            #Navbar.nav-collapsed .nav-container {
-                opacity: 0;
-                visibility: hidden;
-            }
-
-            #Navbar.nav-expanded .nav-container {
-                opacity: 1;
-                visibility: visible;
-                width: 200px;
-            }
-        }
-
     </style>
 
 </head>
 <body>
 
-   <button class="mobile-toggle" id="mobileToggle">
-       <i class="fas fa-bars"></i>
-   </button>
+
 
     <section id="Navbar">
         <div class="nav-container">
@@ -1513,50 +1453,6 @@
         setLastPage('Target-Page');
     });
 
-    /* Mobile Navigation Toggle */
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navbar = document.getElementById('Navbar');
-        let isNavExpanded = true;
-
-        // Initialize navbar state
-        if (window.innerWidth <= 992) {
-            navbar.classList.add('nav-expanded');
-        }
-
-        // Toggle navbar on button click
-        mobileToggle.addEventListener('click', function() {
-            if (navbar.classList.contains('nav-collapsed')) {
-                navbar.classList.remove('nav-collapsed');
-                navbar.classList.add('nav-expanded');
-                isNavExpanded = true;
-            } else {
-                navbar.classList.remove('nav-expanded');
-                navbar.classList.add('nav-collapsed');
-                isNavExpanded = false;
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 992) {
-                navbar.classList.add(isNavExpanded ? 'nav-expanded' : 'nav-collapsed');
-            } else {
-                navbar.classList.remove('nav-expanded', 'nav-collapsed');
-            }
-        });
-
-        // Close navbar when clicking outside
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 992) {
-                if (!navbar.contains(e.target) && !mobileToggle.contains(e.target) && isNavExpanded) {
-                    navbar.classList.remove('nav-expanded');
-                    navbar.classList.add('nav-collapsed');
-                    isNavExpanded = false;
-                }
-            }
-        });
-    });
 </script>
 
 </body>
